@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const routes = require('./routes.js')
+
 
 app.set("view engine", "pug");
 
@@ -16,7 +18,10 @@ app.get('/capital-letters/:id', (req, res) =>{
     res.send(bigWord.toUpperCase())
 })
 
-app.all('*', (req, res) => {
+app.use('/:id/', routes);
+
+
+app.all('/\\w+-?\\w+$', (req, res) => {
     res.render('generic', { method:req.method, path:req.path, randomNum:Math.round(Math.random())})
 })
 
